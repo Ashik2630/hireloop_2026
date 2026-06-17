@@ -5,9 +5,11 @@ import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { signIn, signUp } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
+import { Label, Radio, RadioGroup } from "@heroui/react";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState("seeker");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,11 +20,12 @@ export default function RegisterPage() {
       email: signUpData.email,
       password: signUpData.password,
       name: signUpData.name,
+      role: role,
     });
 
-    if(data){
-      alert('Signup successful!')
-      redirect('/')
+    if (data) {
+      alert("Signup successful!");
+      redirect("/");
     }
 
     if (error) {
@@ -31,17 +34,6 @@ export default function RegisterPage() {
       console.log("Signup successful:", data);
     }
   };
-
-
-  const handleSignIn = async () => {
-  const data = await signIn.social({
-    provider: "google",
-  });
-  if(data){
-    alert('Signup successful!')
-    redirect('/')
-  }
-};
 
   return (
     <section className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-10">
@@ -133,6 +125,35 @@ export default function RegisterPage() {
               </button>
             </div>
           </div>
+
+          {/* Role Selection */}
+          <div className="flex flex-col gap-4">
+            <Label>Subscription plan</Label>
+            <RadioGroup
+              defaultValue="seeker"
+              name="role"
+              onChange={(value) => setRole(value)}
+              orientation="horizontal"
+            >
+              <Radio value="seeker">
+                <Radio.Control>
+                  <Radio.Indicator />
+                </Radio.Control>
+                <Radio.Content>
+                  <Label>Job Seeker</Label>
+                </Radio.Content>
+              </Radio>
+              <Radio value="recruiter">
+                <Radio.Control>
+                  <Radio.Indicator />
+                </Radio.Control>
+                <Radio.Content>
+                  <Label>Recruiter</Label>
+                </Radio.Content>
+              </Radio>
+            </RadioGroup>
+          </div>
+
           {/* Terms */}
           <label className="flex items-center gap-2 text-sm text-zinc-400">
             <input type="checkbox" className="h-4 w-4 accent-indigo-500" />I
@@ -154,18 +175,6 @@ export default function RegisterPage() {
           <span className="text-sm text-zinc-500">OR</span>
           <div className="h-px flex-1 bg-zinc-800" />
         </div>
-
-        {/* Social Login */}
-        <div className="grid grid-cols-2 gap-4">
-          <button onClick={handleSignIn} className="rounded-xl border border-zinc-800 bg-zinc-900 py-3 hover:bg-zinc-800 transition">
-            Google
-          </button>
-
-          <button className="rounded-xl border border-zinc-800 bg-zinc-900 py-3 hover:bg-zinc-800 transition">
-            GitHub
-          </button>
-        </div>
-
         {/* Login Link */}
         <p className="mt-6 text-center text-sm text-zinc-400">
           Already have an account?{" "}

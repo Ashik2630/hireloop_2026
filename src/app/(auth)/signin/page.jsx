@@ -6,39 +6,31 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
 
+
 export default function SigninPage() {
   const [showPassword, setShowPassword] = useState(false);
+  
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const signinData = Object.fromEntries(formData.entries())
+    const signinData = Object.fromEntries(formData.entries());
 
-
-    const {data, error} = await signIn.email({
+    const { data, error } = await signIn.email({
       email: signinData.email,
       password: signinData.password,
-    })
+      
+    });
 
-    if(data){
-      alert('Sign-in successful!')
-      redirect('/')
+    if (data) {
+      alert("Sign-in successful!");
+      redirect("/");
     }
-    if(error){
-      alert(error.message)
+    if (error) {
+      alert(error.message);
     }
   };
-
-   const handleSignIn = async () => {
-  const data = await signIn.social({
-    provider: "google",
-  });
-  if(data){
-    alert('Signup successful!')
-    redirect('/')
-  }
-};
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-black text-white flex items-center justify-center px-4 py-10">
@@ -65,10 +57,7 @@ export default function SigninPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-sm text-zinc-300"
-            >
+            <label htmlFor="email" className="mb-2 block text-sm text-zinc-300">
               Email Address
             </label>
 
@@ -92,10 +81,7 @@ export default function SigninPage() {
           {/* Password */}
           <div>
             <div className="mb-2 flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="text-sm text-zinc-300"
-              >
+              <label htmlFor="password" className="text-sm text-zinc-300">
                 Password
               </label>
 
@@ -128,22 +114,16 @@ export default function SigninPage() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
               >
-                {showPassword ? (
-                  <EyeOff size={18} />
-                ) : (
-                  <Eye size={18} />
-                )}
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
           </div>
+          
 
           {/* Remember Me */}
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center gap-2 text-zinc-400">
-              <input
-                type="checkbox"
-                className="h-4 w-4 accent-indigo-500"
-              />
+              <input type="checkbox" className="h-4 w-4 accent-indigo-500" />
               Remember me
             </label>
           </div>
@@ -163,24 +143,6 @@ export default function SigninPage() {
           <span className="text-sm text-zinc-500">OR</span>
           <div className="h-px flex-1 bg-zinc-800" />
         </div>
-
-        {/* Social Login */}
-        <div className="grid grid-cols-2 gap-4">
-          <button onClick={handleSignIn}
-            type="button"
-            className="rounded-xl border border-zinc-800 bg-zinc-900 py-3 transition hover:bg-zinc-800"
-          >
-            Google
-          </button>
-
-          <button
-            type="button"
-            className="rounded-xl border border-zinc-800 bg-zinc-900 py-3 transition hover:bg-zinc-800"
-          >
-            GitHub
-          </button>
-        </div>
-
         {/* Register Link */}
         <p className="mt-6 text-center text-sm text-zinc-400">
           Don&lsquo;t have an account?{" "}
