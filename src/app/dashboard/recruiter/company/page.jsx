@@ -40,7 +40,7 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
         const file = e.target.files[0];
         if (!file) return;
 
-        // Simple Validation
+        // Simple Validations
         if (file.size > 5 * 1024 * 1024) {
             setErrors(prev => ({ ...prev, logo: "File size exceeds 5MB limit" }));
             return;
