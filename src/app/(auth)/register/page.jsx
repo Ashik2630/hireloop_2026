@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
-import { signIn, signUp } from "@/lib/auth-client";
+import {  signUp } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
-import { Label, Radio, RadioGroup } from "@heroui/react";
+import { Label,  Radio,  RadioGroup } from "@heroui/react";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
